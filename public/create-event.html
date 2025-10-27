@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create Event — PhotoDrop</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <h1>Create a New Event</h1>
+
+    <form id="event-form">
+      <fieldset>
+        <legend>Event Details</legend>
+
+        <label for="title">Event Name</label>
+        <input type="text" id="title" name="title" required />
+
+        <label>
+          <input type="checkbox" id="allowGallery" name="allowGallery" checked />
+          Allow selecting from gallery
+        </label>
+
+        <label>
+          <input type="checkbox" id="allowAny" name="allowAny" />
+          Allow uploading any photo (disable to require “taken today”)
+        </label>
+
+        <label>
+          <input type="checkbox" id="requireTakenToday" name="requireTakenToday" checked />
+          Require photo taken today
+        </label>
+      </fieldset>
+
+      <button type="submit">Generate Event Link</button>
+    </form>
+
+    <div id="result" hidden>
+      <p>Your event is ready:</p>
+      <code id="event-link"></code>
+    </div>
+  </main>
+
+  <script type="module">
+    const form = document.getElementById("event-form");
+    const result = document.getElementById("result");
+    const linkEl = document.getElementById("event-link");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const data = {
+        title: form.title.value,
+        allowGallery: form.allowGallery.checked,
+        allowAny: form.allowAny.checked,
+        requireTakenToday: form.requireTakenToday.checked,
+      };
+
+      const res = await fetch("/create-event", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) {
+        alert("Failed to create event");
+        return;
+      }
+
+      const { eventId } = await res.json();
+      const url = `${location.origin}/event.html?e=${eventId}`;
+      linkEl.textContent = url;
+      linkEl.style.wordBreak = "break-all";
+      result.hidden = false;
+    });
+  </script>
+</body>
+</html>

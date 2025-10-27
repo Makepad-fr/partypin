@@ -1,0 +1,38 @@
+body {
+  font-family: sans-serif;
+  padding: 1rem;
+  background: #f9f9f9;
+}
+
+input, button {
+  margin-top: 1rem;
+  display: block;
+}
+
+#gallery {
+  margin-top: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+#gallery img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+.photo-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.photo-card img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+.photo-card small {
+  margin-top: 4px;
+  font-size: 0.75rem;
+  color: #666;
+}
