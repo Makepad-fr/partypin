@@ -22,6 +22,8 @@ async function loadEventConfig() {
   const res = await fetch(`/event-config?eventId=${eventId}`);
   if (res.ok) {
     config = await res.json();
+    const titleEl = document.getElementById("event-title");
+    if (titleEl && config.title) titleEl.textContent = config.title;
     applyConfig();
     loadImages(); // initial image load
     setInterval(loadImages, 5000); // refresh every 5s

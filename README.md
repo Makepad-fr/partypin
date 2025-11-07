@@ -94,12 +94,12 @@ Typical response:
 
 Form fields:
 - `eventId` — the event code you got from `/create-event`
-- `file` — the image file to upload
+- `image` — the image file to upload
 
 Example:
 ```bash
 curl -F eventId=ABC123 \
-     -F file=@photo.jpg \
+     -F image=@photo.jpg \
      http://localhost:6060/upload
 ```
 
